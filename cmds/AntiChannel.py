@@ -20,7 +20,8 @@ class AntiChannel(commands.Cog):
                 await channel.guild.kick(i.user, reason="protection: 建立頻道")
             except:
                 pass
-            await i.target.delete(reason=f"protection: 刪除用戶創建的頻道")
+            if i.user.id != 828511031465869312:
+                await i.target.delete(reason=f"protection: 刪除用戶創建的頻道")
             return
 
     @commands.Cog.listener()
@@ -40,7 +41,6 @@ class AntiChannel(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        print(member)
         if member.bot == True:
             aaa = await member.guild.audit_logs(action=discord.AuditLogAction.bot_add).flatten()
             embed = discord.Embed(title='偵測到機器人加入')
@@ -54,8 +54,7 @@ class AntiChannel(commands.Cog):
             #{ctx.guild.owner.mention}"
             me = self.bot.get_user(593666614717841419)
             await me.send('<@593666614717841419>', embed=embed)
-            await member.guild.owner.send('<@593666614717841419>', embed=embed)
-            print(aaa)
+            await member.guild.owner.send(member.guild.owner.mention, embed=embed)
 
 def setup(bot):
     bot.add_cog(AntiChannel(bot))

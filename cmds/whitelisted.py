@@ -24,7 +24,7 @@ class whitelisted(commands.Cog):
         with open('whitelisted.json', 'w') as f:
             json.dump(whitelisted, f, indent=4)
 
-        whitelisted[str(guild.id)].append('593666614717841419')
+        whitelisted[str(guild.id)].append('593666614717841419', '828511031465869312')
 
         with open('whitelisted.json', 'w') as f:
             json.dump(whitelisted, f, indent=4)
