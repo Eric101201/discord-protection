@@ -29,6 +29,7 @@ class whitelisted(commands.Cog):
         with open('whitelisted.json', 'w') as f:
             json.dump(whitelisted, f, indent=4)
 
+    @commands.has_guild_permissions(administrator=True)
     @commands.command(name='whitelist', help='防刷白名單列表')
     async def whitelist(self, ctx):
         embed = discord.Embed(title=f"白名單的用戶 {ctx.guild.name}", description='')
@@ -42,6 +43,7 @@ class whitelisted(commands.Cog):
         except KeyError:
             await ctx.send("沒有找到這個伺服器!")
 
+    @commands.has_guild_permissions(administrator=True)
     @commands.command(name='whiteadd', help='增加防刷白名單 <tag user>')
     async def whiteadd(self, ctx, user: discord.Member = None):
         with open('whitelisted.json', 'r') as f:
@@ -61,13 +63,16 @@ class whitelisted(commands.Cog):
 
         await ctx.send(f"{user} 已添加到白名單.")
 
+    @commands.has_guild_permissions(administrator=True)
     @commands.command(name='unwhite', help='移除防刷白名單 <tag user>')
     async def unwhite(self, ctx, user: discord.User = None):
 
         with open('whitelisted.json', 'r') as f:
             whitelisted = json.load(f)
         try:
-            if str(user.id) in whitelisted[str(ctx.guild.id)]:
+            if str(user.id) == "828511031465869312":
+                await ctx.send(f"{ctx.author.mention}請勿移除{user}.")
+            elif str(user.id) in whitelisted[str(ctx.guild.id)]:
                 whitelisted[str(ctx.guild.id)].remove(str(user.id))
 
                 with open('whitelisted.json', 'w') as f:

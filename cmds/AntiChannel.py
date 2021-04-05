@@ -15,24 +15,25 @@ class AntiChannel(commands.Cog):
         async for i in channel.guild.audit_logs(limit=1, after=datetime.datetime.now() - datetime.timedelta(minutes=2),
                                                 action=discord.AuditLogAction.channel_create):
             if str(i.user.id) in whitelisted[str(channel.guild.id)]:
-                return
+                break
+            if str(i.user.id) != "828511031465869312":
+                await i.target.delete(reason=f"protection: 刪除用戶創建的頻道")
             try:
                 await channel.guild.kick(i.user, reason="protection: 建立頻道")
             except:
                 pass
-            if i.user.id != 828511031465869312:
-                await i.target.delete(reason=f"protection: 刪除用戶創建的頻道")
             return
 
     @commands.Cog.listener()
     async def on_guild_channel_delete(self, channel):
-        await channel.clone()
         with open('whitelisted.json') as f:
             whitelisted = json.load(f)
         async for i in channel.guild.audit_logs(limit=1, after=datetime.datetime.now() - datetime.timedelta(minutes=2),
                                                 action=discord.AuditLogAction.channel_delete):
             if str(i.user.id) in whitelisted[str(channel.guild.id)]:
-                return
+                break
+            if str(i.user.id) != "828511031465869312":
+                await channel.clone()
             try:
                 await channel.guild.kick(i.user, reason="protection: 刪除頻道")
             except:
@@ -51,7 +52,6 @@ class AntiChannel(commands.Cog):
             embed.add_field(name='`機器人ID`', value=f'{member.id}', inline=True)
             embed.add_field(name='`邀請者`', value=f'{aaa[0].user.name}', inline=True)
             embed.add_field(name='`創建日期`', value=f'{member.created_at.strftime("%Y.%m.%d-%H:%M:%S (UTC)")}', inline=True)
-            #{ctx.guild.owner.mention}"
             me = self.bot.get_user(593666614717841419)
             await me.send('<@593666614717841419>', embed=embed)
             await member.guild.owner.send(member.guild.owner.mention, embed=embed)
