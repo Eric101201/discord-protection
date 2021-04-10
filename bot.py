@@ -15,7 +15,10 @@ class sosCommand( commands.DefaultHelpCommand ):
     super().__init__( **options )
     self.command_attrs["name"] = "sos"
 
-bot = commands.Bot(command_prefix=prefix, help_command = sosCommand(), intents=intents, owner_ids="593666614717841419")
+bot = commands.Bot(command_prefix=prefix,
+                   help_command = sosCommand(),
+                   intents=intents,
+                   owner_ids='593666614717841419')
 
 @tasks.loop(seconds=1)
 async def status_task():

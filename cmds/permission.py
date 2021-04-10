@@ -11,6 +11,7 @@ class permission(commands.Cog):
 
     @commands.has_guild_permissions(administrator=True)
     @commands.command(name='reload', help='重新載入 <Cog mod>')
+    @commands.is_owner()
     async def reload(self, ctx, extension):
         self.bot.reload_extension(f"cmds.{extension}")
         # console message
@@ -19,6 +20,7 @@ class permission(commands.Cog):
 
     @commands.has_guild_permissions(administrator=True)
     @commands.command(name='load', help='載入 <Cog mod>')
+    @commands.is_owner()
     async def load(self, ctx, extension):
         self.bot.load_extension(f"cmds.{extension}")
         # console message
@@ -27,6 +29,7 @@ class permission(commands.Cog):
 
     @commands.has_guild_permissions(administrator=True)
     @commands.command(name='unload', help='移除 <Cog mod>')
+    @commands.is_owner()
     async def unload(self, ctx, extension):
         self.bot.unload_extension(f"cmds.{extension}")
         # console message
@@ -35,6 +38,7 @@ class permission(commands.Cog):
 
     @commands.has_guild_permissions(administrator=True)
     @commands.command(name='bye', help='關閉機器人')
+    @commands.is_owner()
     async def bye(self, ctx):
         await ctx.send("`機器人關機中...`")
         # console message
@@ -43,6 +47,7 @@ class permission(commands.Cog):
 
     @commands.has_guild_permissions(administrator=True)
     @commands.command(name='rebot', help='rebot')
+    @commands.is_owner()
     async def rebot(self, ctx):
         """Restarts the bot"""
         await log('discord.command', "機器人重啟")
